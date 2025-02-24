@@ -15,7 +15,7 @@ namespace Crowds
 
 		virtual void update(double dt) override
 		{
-			auto entities = this->perceive<Prey>(this->getRadius() + 10.0);
+			auto entities = this->perceive<Agent>(this->getRadius() + 1000.0);
 
 			WaterMessage waterMessage{this};
 
