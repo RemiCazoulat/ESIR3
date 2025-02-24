@@ -2,6 +2,7 @@
 
 #include <Crowds/Messages.h>
 #include <Crowds/Agent.h>
+#include <Crowds/Prey.h>
 
 namespace Crowds
 {
@@ -14,7 +15,7 @@ namespace Crowds
 
 		virtual void update(double dt) override
 		{
-			auto entities = this->perceive<Agent>(this->getRadius() + 10.0);
+			auto entities = this->perceive<Prey>(this->getRadius() + 10.0);
 
 			WaterMessage waterMessage{this};
 
