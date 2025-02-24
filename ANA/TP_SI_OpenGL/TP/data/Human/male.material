@@ -1,0 +1,171 @@
+material male_0_base
+{
+    receive_shadows on
+
+    technique
+    {
+        pass
+        {
+            lighting on
+
+            ambient 0.301961 0.294118 0.235294 1
+            diffuse 1.000000 0.950000 0.850000 1.000000
+            specular 0.027451 0.027451 0.027451 64.000000
+            emissive 0.196078 0.101961 0.101961
+
+            depth_write on
+
+            texture_unit diffuseTexture
+            {
+                texture textures/young_lightskinned_female_diffuse.png
+            }
+
+            //texture_unit litsphereTexture
+            //{
+            //    texture textures/lit_asian.png
+            //}
+
+        }
+    }
+}
+
+material male_1_mhair02
+{
+    receive_shadows on
+
+    technique
+    {
+        pass
+        {
+            lighting on
+
+            ambient 0.110000 0.110000 0.110000 1
+            diffuse 1.000000 1.000000 1.000000 1.000000
+            specular 0.050980 0.050980 0.050980 122.880000
+            emissive 0.000000 0.000000 0.000000
+
+            depth_write off
+            alpha_rejection greater 128
+
+            texture_unit diffuseTexture
+            {
+                texture textures/male02_diffuse_black.png
+            }
+
+            //texture_unit litsphereTexture
+            //{
+            //    texture textures/lit_hair.png
+            //}
+
+        }
+    }
+}
+
+material male_2_high_poly
+{
+    receive_shadows on
+
+    technique
+    {
+        pass
+        {
+            lighting on
+
+            ambient 0.110000 0.110000 0.110000 1
+            diffuse 1.000000 1.000000 1.000000 1.000000
+            specular 1.000000 1.000000 1.000000 126.720000
+            emissive 0.000000 0.000000 0.000000
+
+            depth_write off
+            alpha_rejection greater 128
+
+            texture_unit diffuseTexture
+            {
+                texture textures/green_eye.png
+            }
+
+            //texture_unit litsphereTexture
+            //{
+            //    texture textures/skinmat_eye.png
+            //}
+
+        }
+    }
+}
+
+material male_3_suit01lres
+{
+    receive_shadows on
+
+    technique
+    {
+        pass
+        {
+            lighting on
+
+            ambient 1.000000 1.000000 1.000000 1
+            diffuse 1.000000 1.000000 1.000000 1.000000
+            specular 0.031373 0.031373 0.031373 25.100800
+            emissive 0.000000 0.000000 0.000000
+
+            depth_write on
+
+            texture_unit diffuseTexture
+            {
+                texture textures/suit01lres_diffuse.png
+            }
+
+            //texture_unit normalMapTexture
+            //{
+            //    texture textures/suit01_normals.png
+            //}
+
+            //texture_unit litsphereTexture
+            //{
+            //    texture textures/lit_matte.png
+            //}
+
+        }
+    }
+}
+
+material male_4_shoes01_lres
+{
+    receive_shadows on
+
+    technique
+    {
+        pass
+        {
+            lighting on
+
+            ambient 0.105882 0.105882 0.105882 1
+            diffuse 1.000000 1.000000 1.000000 1.000000
+            specular 0.278431 0.278431 0.278431 51.200000
+            emissive 0.000000 0.000000 0.000000
+
+            depth_write on
+
+            texture_unit diffuseTexture
+            {
+                texture textures/classicshoes_texture_diffuse_black.png
+            }
+
+            //texture_unit normalMapTexture
+            //{
+            //    texture textures/classicshoes_texture_normals.png
+            //}
+
+            //texture_unit aoMapTexture
+            //{
+            //    texture textures/classicshoes_texture_ao.png
+            //}
+
+            //texture_unit litsphereTexture
+            //{
+            //    texture textures/lit_refl_sharp.png
+            //}
+
+        }
+    }
+}

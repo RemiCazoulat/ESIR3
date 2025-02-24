@@ -1,0 +1,40 @@
+function [ redressee ] = RedressementJud( criminelle )
+redressee = zeros(size(criminelle));
+
+
+
+n = size(criminelle, 1);
+m = size(criminelle, 2);
+x = repmat((1:n)', 1, m) / n
+y = x';
+z = double(criminelle);
+
+Xcolv = x(:);
+Ycolv = y(:);
+Zcolv = z(:); 
+Const = ones(size(Xcolv));
+
+size(Xcolv)
+size(Ycolv)
+size(Zcolv)
+
+Coefficients = [Xcolv Ycolv Const]\Zcolv; 
+
+
+
+XCoeff = Coefficients(1); 
+YCoeff = Coefficients(2); 
+CCoeff = Coefficients(3); 
+
+CCoeff
+
+redressee = =
+
+for i = 1:size(criminelle, 1)
+    for j = 1:size(criminelle, 2)
+        redressee(i, j) = XCoeff * x(i + j * n) + YCoeff * y(i + j * n) + CCoeff + criminelle(i, j);
+    end
+end
+
+end
+

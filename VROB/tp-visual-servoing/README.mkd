@@ -1,0 +1,42 @@
+# Travaux Pratiques Master SIV - ENS
+
+## 1. Prequisites
+
+To carry out the exercises, you will need `python` along with `numpy` and `matplotlib` packages.
+
+To check if `numpy` is installed, you may run:
+
+    $ python3 -m pip show numpy
+
+To check if `matplotlib` is installed, you may run:
+
+    $ python3 -m pip show matplotlib
+
+## 2. Python packages installation
+### 2.1. Using pip
+
+    $ pip install numpy matplotlib
+
+### 2.2. Using mini-conda
+
+If you want rather to use a mini-conda environment you may run:
+
+    $ conda create -n tpsiv
+    $ conda activate tpsiv
+    $ pip install numpy matplotlib
+
+### 2.3. Using a virtual environment
+
+    $ python3 -m venv venv
+    $ source venv/bin/activate
+    $ python3 -m pip install --upgrade pip
+    $ pip3 install numpy matplotlib
+
+## 3. How to run the Travaux Pratiques
+
+    $ python3 tp4-ibvs-one-point.py --help
+    $ python3 tp4-ibvs-one-point.py --plot-log-scale
+
+    $ python3 tp4-ibvs-four-points.py --initial-position 1 --plot-log-scale
+
+    $ python3 tp4-pbvs-four-points.py --initial-position 1 --plot-log-scale

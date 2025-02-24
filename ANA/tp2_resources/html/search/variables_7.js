@@ -1,0 +1,23 @@
+var searchData=
+[
+  ['getclipboardtextfn_7849',['GetClipboardTextFn',['../struct_im_gui_i_o.html#ab7face2b2efef720a22a7fb2143d415c',1,'ImGuiIO']]],
+  ['gimgui_7850',['GImGui',['../imgui__internal_8h.html#a93caa8df61dac3cb1ab1271a755442a3',1,'GImGui():&#160;imgui.cpp'],['../imgui_8cpp.html#a26aa67b834c0453a50c5e3970a8eba07',1,'GImGui():&#160;imgui.cpp']]],
+  ['glyf_7851',['glyf',['../structstbtt__fontinfo.html#a5de2129e0a415748920f6aa10ceee6e5',1,'stbtt_fontinfo']]],
+  ['glyphadvancex_7852',['GlyphAdvanceX',['../struct_im_font_atlas_custom_rect.html#a062a08fee260f08e669231e602682617',1,'ImFontAtlasCustomRect']]],
+  ['glyphextraspacing_7853',['GlyphExtraSpacing',['../struct_im_font_config.html#a82db103689b1c434ec92875721967c07',1,'ImFontConfig']]],
+  ['glyphmaxadvancex_7854',['GlyphMaxAdvanceX',['../struct_im_font_config.html#af9040efaa5998aef3add4b629d7dc255',1,'ImFontConfig']]],
+  ['glyphminadvancex_7855',['GlyphMinAdvanceX',['../struct_im_font_config.html#a3015c4ad464a7b5abeb5b926e8896bf6',1,'ImFontConfig']]],
+  ['glyphoffset_7856',['GlyphOffset',['../struct_im_font_config.html#a290a81956fdcb7ad3b5e3152594db121',1,'ImFontConfig::GlyphOffset()'],['../struct_im_font_atlas_custom_rect.html#a03f4d8c267b53dd7981560b0fb5b8b03',1,'ImFontAtlasCustomRect::GlyphOffset()']]],
+  ['glyphranges_7857',['GlyphRanges',['../struct_im_font_config.html#aa174ceff80323012cd1b717d864258dd',1,'ImFontConfig']]],
+  ['glyphs_7858',['Glyphs',['../struct_im_font.html#a1a0901fc1a8cbd41d582d6cef4946bc9',1,'ImFont']]],
+  ['glyphscount_7859',['GlyphsCount',['../struct_im_font_build_src_data.html#a73600dcc4e6c8d6b499c032c4ed0e823',1,'ImFontBuildSrcData::GlyphsCount()'],['../struct_im_font_build_dst_data.html#aeb9950177ed2ec156332ec8c3683c2e2',1,'ImFontBuildDstData::GlyphsCount()']]],
+  ['glyphshighest_7860',['GlyphsHighest',['../struct_im_font_build_src_data.html#a40ce6c1a652c3d3c67d094e064691da1',1,'ImFontBuildSrcData::GlyphsHighest()'],['../struct_im_font_build_dst_data.html#a2c0592f57b8381a9d106b6881491b29c',1,'ImFontBuildDstData::GlyphsHighest()']]],
+  ['glyphslist_7861',['GlyphsList',['../struct_im_font_build_src_data.html#ae4d653fb221fc19a30a2117f73043377',1,'ImFontBuildSrcData']]],
+  ['glyphsset_7862',['GlyphsSet',['../struct_im_font_build_src_data.html#a7edd0193194ca109bfa5042369861935',1,'ImFontBuildSrcData::GlyphsSet()'],['../struct_im_font_build_dst_data.html#a20235f24452258e2ea04909d3dd075da',1,'ImFontBuildDstData::GlyphsSet()']]],
+  ['gpos_7863',['gpos',['../structstbtt__fontinfo.html#aeb6732549a55fa30235d0c0ecd743022',1,'stbtt_fontinfo']]],
+  ['grabminsize_7864',['GrabMinSize',['../struct_im_gui_style.html#a04db033d001b343815cdcd2491576ef7',1,'ImGuiStyle']]],
+  ['grabrounding_7865',['GrabRounding',['../struct_im_gui_style.html#a42369d83032545066803a7db62936e8f',1,'ImGuiStyle']]],
+  ['groupoffset_7866',['GroupOffset',['../struct_im_gui_window_temp_data.html#a29dbe26f59a7a8b667cc21a3ea3332a9',1,'ImGuiWindowTempData']]],
+  ['groupstack_7867',['GroupStack',['../struct_im_gui_window_temp_data.html#ab25fa1835e4cabf3edc642ab67f4ed8b',1,'ImGuiWindowTempData']]],
+  ['gsubrs_7868',['gsubrs',['../structstbtt__fontinfo.html#afc5bfc4a52ad0e3879f0f81a372da7fb',1,'stbtt_fontinfo']]]
+];
