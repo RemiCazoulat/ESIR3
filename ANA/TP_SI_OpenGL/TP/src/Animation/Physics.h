@@ -196,7 +196,7 @@ namespace Animation
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// \fn	inline ::std::pair<Math::Vector3f, Math::Vector3f> integrateEuler(const PonctualMass & previousMass,
-		/// 	const PonctualMass & currentMass, float dt)
+		/// 	const PonctualMass & currentMass, float m_dt)
 		///
 		/// \brief	Euler integrator.
 		///
@@ -205,7 +205,7 @@ namespace Animation
 		///
 		/// \param	previousMass	The previous state of the mass.
 		/// \param	currentMass 	The current state of the mass.
-		/// \param	dt				The dt.
+		/// \param	m_dt				The m_dt.
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		inline ::std::pair<Math::Vector3f, Math::Vector3f> integrateEuler(const PonctualMass & previousMass, const PonctualMass & currentMass, float dt) 
 		{
@@ -216,7 +216,7 @@ namespace Animation
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// \fn	inline ::std::pair<Math::Vector3f, Math::Vector3f> integrateVerlet(const PonctualMass & previousMass,
-		/// 	const PonctualMass & currentMass, float dt)
+		/// 	const PonctualMass & currentMass, float m_dt)
 		///
 		/// \brief	Verlet integrator.
 		///
@@ -225,7 +225,7 @@ namespace Animation
 		///
 		/// \param	previousMass	The previous state of the mass.
 		/// \param	currentMass 	The current state of the mass.
-		/// \param	dt				The dt.
+		/// \param	m_dt				The m_dt.
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		inline ::std::pair<Math::Vector3f, Math::Vector3f> integrateVerlet(const PonctualMass & previousMass, const PonctualMass & currentMass, float dt)
 		{

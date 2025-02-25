@@ -38,9 +38,9 @@ namespace Crowds
 		}
 
 		/// <summary>
-		/// Integrates the agent speed and position given the specified dt.
+		/// Integrates the agent speed and position given the specified m_dt.
 		/// </summary>
-		/// <param name="dt">The dt (integration step).</param>
+		/// <param name="m_dt">The m_dt (integration step).</param>
 		void integrate(double dt)
 		{
 			m_acceleration = truncate(m_steeringForce, m_maxForce) / m_mass;
@@ -217,7 +217,7 @@ namespace Crowds
 		/// Updates the agent (position and speed) and resets the steering force for next computations.
 		/// The update method used by inheriting agents should call this implementation at the end of its own update.
 		/// </summary>
-		/// <param name="dt">The dt.</param>
+		/// <param name="m_dt">The m_dt.</param>
 		virtual void update(double dt) override
 		{
 			integrate(dt); // We compute the new position and speed
@@ -297,7 +297,7 @@ namespace Crowds
 		/// </summary>
 		/// <param name="circleDistance">The circle distance.</param>
 		/// <param name="circleRadius">The circle radius.</param>
-		/// <param name="previousAngle">The previous angle.</param>
+		/// <param name="m_previousAngle">The previous angle.</param>
 		/// <param name="modificationPercentage">The modification percentage.</param>
 		/// <returns></returns>
 		Math::Vector2f wander(float circleDistance, float circleRadius, float & previousAngle, float modificationPercentage, float adaptationTime = 1.0f)
@@ -335,7 +335,7 @@ namespace Crowds
 		/// <summary>
 		/// Cohesion steering force.
 		/// </summary>
-		/// <param name="perceptionRadius">The perception radius.</param>
+		/// <param name="m_perceptionRadius">The perception radius.</param>
 		/// <returns></returns>
 		Math::Vector2f cohesion(float perceptionRadius, float adaptationTime = 1.0f) const
 		{
@@ -365,7 +365,7 @@ namespace Crowds
 		/// <summary>
 		/// Alignment steering force.
 		/// </summary>
-		/// <param name="perceptionRadius">The perception radius.</param>
+		/// <param name="m_perceptionRadius">The perception radius.</param>
 		/// <returns></returns>
 		Math::Vector2f alignment(float perceptionRadius, float adaptationTime = 1.0f) const
 		{
@@ -397,7 +397,7 @@ namespace Crowds
 		/// <summary>
 		/// Separation steering force.
 		/// </summary>
-		/// <param name="perceptionRadius">The perception radius.</param>
+		/// <param name="m_perceptionRadius">The perception radius.</param>
 		/// <returns></returns>
 		Math::Vector2f separation(float perceptionRadius, float adaptationTime = 1.0f)
 		{

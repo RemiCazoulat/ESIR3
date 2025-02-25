@@ -39,7 +39,7 @@ namespace Application
 		static Base * s_activeInstance ;
 		/// \brief	Time of the last frame.
 		tbb::tick_count m_lastFrameTime ;
-		/// \brief	The dt (time elapsed since last rendered frame).
+		/// \brief	The m_dt (time elapsed since last rendered frame).
 		double m_dt ;
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -490,7 +490,7 @@ namespace Application
 		}
 
 		/// <summary>
-		/// Gets the dt.
+		/// Gets the m_dt.
 		/// </summary>
 		/// <returns></returns>
 		double getDt() const

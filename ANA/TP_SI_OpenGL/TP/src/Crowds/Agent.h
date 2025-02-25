@@ -131,7 +131,7 @@ namespace Crowds
 		Math::Vector2f getFrontVector() const { return Math::makeVector(cos(m_orientation), sin(m_orientation)); }
 
 		/// <summary>
-		/// Perceives the entities of type EntityType beeing at a distance lesser than radius and in a field of view of angle 2*openingAngle.
+		/// Perceives the m_entities of type EntityType beeing at a distance lesser than radius and in a field of view of angle 2*openingAngle.
 		/// </summary>
 		/// <param name="radius">The maixmum distance of perception.</param>
 		/// <param name="openingAngle">The half opening angle of the field of view.</param>
@@ -216,7 +216,7 @@ namespace Crowds
 		}
 
 		/// <summary>
-		/// Posts the specified message to the entities lying in the provided circle.
+		/// Posts the specified message to the m_entities lying in the provided circle.
 		/// </summary>
 		/// <param name="message">The message.</param>
 		/// <param name="position">The position.</param>
@@ -242,7 +242,7 @@ namespace Crowds
 		/// <summary>
 		/// Updates the agent for the provided time step.
 		/// </summary>
-		/// <param name="dt">The dt.</param>
+		/// <param name="m_dt">The m_dt.</param>
 		virtual void update(double dt) = 0;
 
 		/// <summary>

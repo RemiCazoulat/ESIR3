@@ -59,7 +59,7 @@ namespace Application
 
 		virtual void render(double dt)
 		{
-			// We set the last dt
+			// We set the last m_dt
 			m_lastDt = dt;
 			// Handles interactions with the keyboard
 			handleKeys();

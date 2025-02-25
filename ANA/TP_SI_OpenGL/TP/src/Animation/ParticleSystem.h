@@ -73,7 +73,7 @@ namespace Animation
 		/// \date	15/12/2015
 		///
 		/// \tparam	ParticleModifier	Type of the particle modifier.
-		/// \param	modifier	The modifier. void (const Particle & particle, float dt)
+		/// \param	modifier	The modifier. void (const Particle & particle, float m_dt)
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		template <class ParticleModifier>
 		void addModifier(ParticleModifier modifier)
@@ -85,10 +85,10 @@ namespace Animation
 						modifier(*it, dt) ;
 					}
 				} ;
-			//auto func = [this, modifier](float dt) 
+			//auto func = [this, modifier](float m_dt) 
 			//{ 
 			//	auto & refModifier = modifier ;
-			//	auto subFunction = [&dt, refModifier](Particle & particle) { refModifier(particle, dt); } ;
+			//	auto subFunction = [&m_dt, refModifier](Particle & particle) { refModifier(particle, m_dt); } ;
 			//	::tbb::parallel_for_each(m_particles.begin(), m_particles.end(), subFunction) ;
 			//} ; 
 			m_modifiers.push_back(func) ;
@@ -126,19 +126,19 @@ namespace Animation
 		/// \brief	Adds an emitter to the particle system. 
 		/// 		
 		/// 		EmitterFunction is a functor which prototype is: 
-		/// 		bool (ParticleInserter inserter, size_t productionLimit, float dt)
+		/// 		bool (ParticleInserter inserter, size_t productionLimit, float m_dt)
 		/// 		If this function returns false, no more particles will be emitted by this emitter. In this
 		/// 		case, the emitter is immediately removed from the system. 
 		/// 		Parameter inserter: a back insert iterator used to produce particles.
 		/// 		Parameter productionLimit: the maximum number of particles that can be generated, if 
 		/// 		too much particles are produced, the surplus will be deleted. 
-		/// 		Parameter dt: the elapsed time since last call.
+		/// 		Parameter m_dt: the elapsed time since last call.
 		///
 		/// \author	F. Lamarche, Université de Rennes 1
 		/// \date	15/12/2015
 		///
 		/// \tparam	EmitterFunction	Type of the emitter function.
-		/// \param	emitter	The emitter function : bool (ParticleInserter inserter, size_t productionLimit, float dt)
+		/// \param	emitter	The emitter function : bool (ParticleInserter inserter, size_t productionLimit, float m_dt)
 		////////////////////////////////////////////////////////////////////////////////////////////////////		
 		template <class EmitterFunction>
 		void addEmitter(EmitterFunction emitter)
@@ -162,14 +162,14 @@ namespace Animation
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		/// \fn	void ParticleSystem::update(float dt)
+		/// \fn	void ParticleSystem::update(float m_dt)
 		///
 		/// \brief	Updates the particle system.
 		///
 		/// \author	F. Lamarche, Université de Rennes 1
 		/// \date	15/12/2015
 		///
-		/// \param	dt	The dt.
+		/// \param	m_dt	The m_dt.
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		void update(float dt)
 		{
@@ -207,7 +207,7 @@ namespace Animation
 
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		/// \fn	static void ParticleSystem::modifierResetForce(Particle & particle, float dt)
+		/// \fn	static void ParticleSystem::modifierResetForce(Particle & particle, float m_dt)
 		///
 		/// \brief	Modifier that resets forces applied on a particle.
 		///
@@ -215,7 +215,7 @@ namespace Animation
 		/// \date	21/12/2015
 		///
 		/// \param [in,out]	particle	The particle.
-		/// \param	dt					The dt.
+		/// \param	m_dt					The m_dt.
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		static void modifierResetForce(Particle & particle, float dt)
 		{
@@ -223,7 +223,7 @@ namespace Animation
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		/// \fn	static void ParticleSystem::modifierLifeTime(Particle & particle, float dt)
+		/// \fn	static void ParticleSystem::modifierLifeTime(Particle & particle, float m_dt)
 		///
 		/// \brief	Modifier that increases the life time.
 		///
@@ -231,7 +231,7 @@ namespace Animation
 		/// \date	21/12/2015
 		///
 		/// \param [in,out]	particle	The particle.
-		/// \param	dt					The dt.
+		/// \param	m_dt					The m_dt.
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		static void modifierLifeTime(Particle & particle, float dt)
 		{
@@ -239,7 +239,7 @@ namespace Animation
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		/// \fn	static void ParticleSystem::modifierIntegrator(Particle & particle, float dt)
+		/// \fn	static void ParticleSystem::modifierIntegrator(Particle & particle, float m_dt)
 		///
 		/// \brief	Modifier that integrates force and speed to produce particle movements.
 		///
@@ -247,7 +247,7 @@ namespace Animation
 		/// \date	21/12/2015
 		///
 		/// \param [in,out]	particle	The particle.
-		/// \param	dt					The dt.
+		/// \param	m_dt					The m_dt.
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		static inline void modifierIntegrator(Particle & particle, float dt)
 		{
@@ -323,14 +323,14 @@ namespace Animation
 			float	m_dateFraction ;
 
 			////////////////////////////////////////////////////////////////////////////////////////////////////
-			/// \fn	size_t RateEmitterBase::numberOfParticles(float dt)
+			/// \fn	size_t RateEmitterBase::numberOfParticles(float m_dt)
 			///
 			/// \brief	Returns the number of particles that should be emitted at this time.
 			///
 			/// \author	F. Lamarche, Université de Rennes 1
 			/// \date	15/12/2015
 			///
-			/// \param	dt	The dt.
+			/// \param	m_dt	The m_dt.
 			///
 			/// \return	The total number of particles that should be emitted.
 			////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -414,7 +414,7 @@ namespace Animation
 
 			////////////////////////////////////////////////////////////////////////////////////////////////////
 			/// \fn	template <class ParticleInitializer> bool BallFlowEmitter::emit(ParticleInserter inserter,
-			/// 	size_t productionLimit, float dt)
+			/// 	size_t productionLimit, float m_dt)
 			///
 			/// \brief	Emits a particle located inside a ball.
 			///
@@ -428,7 +428,7 @@ namespace Animation
 			/// 							parameters.
 			/// \param	inserter	   	The inserter in the particle structure.
 			/// \param	productionLimit	The production limit.
-			/// \param	dt			   	The dt.
+			/// \param	m_dt			   	The m_dt.
 			///
 			/// \return	true to always produce particles.
 			////////////////////////////////////////////////////////////////////////////////////////////////////

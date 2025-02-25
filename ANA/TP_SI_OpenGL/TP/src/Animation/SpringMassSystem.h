@@ -704,14 +704,14 @@ namespace Animation
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		/// \fn	bool SpringMassSystem::update(float dt)
+		/// \fn	bool SpringMassSystem::update(float m_dt)
 		///
 		/// \brief	Updates the spring mass system.
 		///
 		/// \author	F. Lamarche, Université de Rennes 1
 		/// \date	17/02/2016
 		///
-		/// \param	dt	The dt.
+		/// \param	m_dt	The m_dt.
 		///
 		/// \return	true if if the system has been updated, false otherwise.
 		////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -15,23 +15,26 @@ namespace Crowds
 
 	class Prey : public Boid
 	{
-		float previousAngle = 0;
-		std::vector<Water*> waters;
-		float thirstiness;
-		bool inWater;
-		Water* currentWater;
-		time_t lastSecond;
+		// ----- Attributes -----
+		// > Water attributes
+		std::vector<Water*> m_waters;
+		float m_thirstiness;
+		bool m_inWater;
+		Water* m_currentWater;
+		time_t m_lastSecond;
 
-		
-		double dt;
-		float perceptionRadius = 10.0;
-		std::vector<std::shared_ptr<Prey>> entities;
-		Math::Vector2f defaultSteeringForce = Math::makeVector(0.0f, 0.0f);
-		Math::Vector2f thirstySteeringForce = Math::makeVector(0.0f, 0.0f);
+		// > Movement attributes
+		double m_dt;
+		float m_previousAngle = 0;
+		float m_perceptionRadius = 10.0;
+		std::vector<std::shared_ptr<Prey>> m_entities;
+		Math::Vector2f m_defaultSteeringForce = Math::makeVector(0.0f, 0.0f);
+		Math::Vector2f m_thirstySteeringForce = Math::makeVector(0.0f, 0.0f);
 
-		std::shared_ptr<AI::Tasks::Task> defaultTask;
-		std::shared_ptr<AI::Tasks::Task> thirstyTask;
-		std::shared_ptr <AI::Tasks::Task> preyBehavior;
+		// > Tasks
+		std::shared_ptr<AI::Tasks::Task> m_defaultTask;
+		std::shared_ptr<AI::Tasks::Task> m_thirstyTask;
+		std::shared_ptr<AI::Tasks::Task> m_preyBehavior;
 
 		float distPreyWater(const Math::Vector2f preyPos, const Math::Vector2f waterPos, const float waterRadius)
 		{
@@ -42,16 +45,16 @@ namespace Crowds
 
 		Water* findNearestWaterSource()
 		{
-			if (waters.empty())
+			if (m_waters.empty())
 			{
 				std::cerr << "There is no water source ! " << std::endl;
 				return nullptr;
 			}
 			Math::Vector2f pos = this->getPosition();
-			Water* nearestWater = waters.at(0);
-			float currentNearestDistance = distPreyWater(pos, nearestWater->getPosition(), nearestWater->getRadius());
+			Water* nearestWater = m_waters.at(0);
+			float nearestDistance = distPreyWater(pos, nearestWater->getPosition(), nearestWater->getRadius());
 			bool first = true;
-			for (auto water : waters)
+			for (auto water : m_waters)
 			{
 				if (first)
 				{
@@ -60,9 +63,9 @@ namespace Crowds
 				}
 
 				float distance = distPreyWater(pos, water->getPosition(), water->getRadius());
-				if (distance < currentNearestDistance)
+				if (distance < nearestDistance)
 				{
-					currentNearestDistance = distance;
+					nearestDistance = distance;
 					nearestWater = water;
 				}
 			}
@@ -71,12 +74,14 @@ namespace Crowds
 
 		void assignLambdasToTasks()
 		{
-			defaultTask = AI::Tasks::makeTask([this]()
+			m_defaultTask = AI::Tasks::makeTask([this]()
 				{
-					std::cout << "in default task. thirstiness = " << thirstiness << std::endl;
-					if (this->mayCollide(entities))
+					std::cout << "|=====[ Default task ]=====|" << std::endl;
+					std::cout << "> thirstiness = " << this->m_thirstiness << std::endl;
+
+					if (this->mayCollide(this->m_entities))
 					{
-						defaultSteeringForce = this->avoidCollisions(entities);
+						this->m_defaultSteeringForce = this->avoidCollisions(m_entities);
 					}
 
 					else
@@ -88,7 +93,7 @@ namespace Crowds
 						float currentHeaviestMass = mass;
 						int heaviestEntity = 0;
 						int entityIndex = -1;
-						for (auto& entity : entities)
+						for (auto& entity : m_entities)
 						{
 							entityIndex++;
 							float entityMass = entity->getMass();
@@ -103,90 +108,105 @@ namespace Crowds
 						// First case -> is the heaviest : just wander
 						if (isHeaviest)
 						{
-							defaultSteeringForce = Boid::wander(2.0, 3.0, previousAngle, this->dt * 5.0);
+							this->m_defaultSteeringForce = Boid::wander(2.0, 3.0, m_previousAngle, this->m_dt * 5.0);
 						}
 
 						// Second case -> follow heaviest sheep
 						else
 						{
-							defaultSteeringForce = Boid::separation(this->perceptionRadius * 0.5, this->dt) * 0.005;
-							defaultSteeringForce += this->arrival(entities.at(entityIndex)->getPosition(), this->dt);
-							//followSteeringForce += Boid::alignment(perceptionRadius * 0.5, dt);
+							this->m_defaultSteeringForce = Boid::separation(this->m_perceptionRadius * 0.5, this->m_dt) * 0.005;
+							this->m_defaultSteeringForce += this->arrival(m_entities.at(entityIndex)->getPosition(), this->m_dt);
+							//followSteeringForce += Boid::alignment(m_perceptionRadius * 0.5, m_dt);
 						}
 					}
 
-					// Computing thirstiness
+					// Computing m_thirstiness
 					time_t currentTime = clock();
-					float deltaTime = compute_time(lastSecond, currentTime);
+					float deltaTime = compute_time(this->m_lastSecond, currentTime);
 					if (deltaTime > 1)
 					{
-						thirstiness--;
+						this->m_thirstiness--;
 
-						lastSecond = currentTime;
+						this->m_lastSecond = currentTime;
 					}
-					if (thirstiness < 10 && findNearestWaterSource() != nullptr)
+					if (this->m_thirstiness < 20 && findNearestWaterSource() != nullptr)
 					{
+						this->m_currentWater = findNearestWaterSource();
 						return AI::Tasks::Task::Status::failure;
 					}
 					return AI::Tasks::Task::Status::running;
 				});
-			thirstyTask = AI::Tasks::makeTask([this]()
+			m_thirstyTask = AI::Tasks::makeTask([this]()
 					{
-						std::cout << "in thirsty task" << std::endl;
+						std::cout << "|=====[ Thirsty task ]=====|" << std::endl;
+
+						std::cout << "> thirstiness = " << this->m_thirstiness << std::endl;
 
 						// If there is no water source selected
-						if (currentWater == nullptr)
+						if (this->m_currentWater == nullptr)
 						{
-							currentWater = findNearestWaterSource();
+							this->m_currentWater = findNearestWaterSource();
+							//std::cout << "> After find nearest water source" << std::endl;
 						}
 
 						// If there is no water source in the simulation
-						/*
-						if (currentWater == nullptr)
+						
+						if (this->m_currentWater == nullptr)
 						{
 							return AI::Tasks::Task::Status::failure;
-						}
-						*/
+							std::cout << "> There is no water sources ! (in lambda)" << std::endl;
 
+						}
+						
 						// Computing if prey is in water
+						this->m_inWater = false; /* Reset each time the bool -> without this, problem was :
+												    Prey thirsty -> go in a water source
+													Prey arrives in a water source -> m_inWater = true
+													Prey is not thirsty anymore -> m_inWater stays true !
+													Prey is thirsty again -> m_inWater is true, even if prey is not in a water source */
 						Math::Vector2f pos = this->getPosition();
-						for (auto water : waters)
+						for (auto water : this->m_waters)
 						{
 							Math::Vector2f waterPos = water->getPosition();
 							float dist = (pos - waterPos).norm();
 							if (dist < water->getRadius())
 							{
-								inWater = true;
+								this->m_inWater = true;
 								break;
 							}
 						}
+						//std::cout << "> Computing if prey is in water" << std::endl;
 
-						// Computing thirstiness
+
+						// Computing m_thirstiness
 						time_t currentTime = clock();
-						float deltaTime = compute_time(lastSecond, currentTime);
+						float deltaTime = compute_time(this->m_lastSecond, currentTime);
 						if (deltaTime > 1)
 						{
-							thirstiness--;
-							if (inWater)
+							this->m_thirstiness--;
+							if (this->m_inWater)
 							{
-								thirstiness += 5;
-								if (thirstiness > 100)
+								this->m_thirstiness += 5;
+								if (this->m_thirstiness > 100)
 								{
-									thirstiness = 100;
+									this->m_thirstiness = 100;
 								}
 							}
 
-							lastSecond = currentTime;
+							this->m_lastSecond = currentTime;
 						}
+						//std::cout << "> Computing thirstiness" << std::endl;
+
 
 						// If prey is at full thirst
-						if (thirstiness >= 100)
+						if (this->m_thirstiness >= 100)
 						{
+							this->m_currentWater = nullptr;
 							return AI::Tasks::Task::Status::success;
 						}
 
 						// Making an arrival force on the pos of the targeted water source 
-						thirstySteeringForce += this->arrival(currentWater->getPosition(), this->dt);
+						this->m_thirstySteeringForce += this->arrival(m_currentWater->getPosition(), this->m_dt);
 						return AI::Tasks::Task::Status::running;
 					});
 		}
@@ -202,18 +222,18 @@ namespace Crowds
 
 		void addWater(const WaterMessage & wm)
 		{
-			waters.push_back(wm.m_water);
+			m_waters.push_back(wm.m_water);
 		}
 
 		Prey(Simulator* simulator, const Math::Vector2f& position, float radius, float mass, float maxSpeed, float maxForce) 
 			: Boid(simulator, position, radius, mass, maxSpeed, maxForce)
 		{
-			thirstiness = Math::Interval<float>(11.0, 12.0).random();
-			inWater = false;
-			lastSecond = clock();
+			m_thirstiness = Math::Interval<float>(22.0, 23.0).random();
+			m_inWater = false;
+			m_lastSecond = clock();
 			createReceiver<WaterMessage>([this](const WaterMessage& m) { addWater(m); });
 			assignLambdasToTasks();
-			preyBehavior = AI::Tasks::loop(defaultTask || thirstyTask);
+			m_preyBehavior = AI::Tasks::loop(m_defaultTask || m_thirstyTask);
 		}
 
 		/// <summary>
@@ -228,41 +248,41 @@ namespace Crowds
 		/// - Compute if prey is in a water source
 		/// - Apply all steering forces
 		/// </summary>
-		/// <param name="dt"></param>
+		/// <param name="m_dt"></param>
 		virtual void update(double dt) override
 
 		{
-			defaultSteeringForce = Math::makeVector(0.0f, 0.0f);
-			thirstySteeringForce = Math::makeVector(0.0f, 0.0f);
-			this->dt = dt;
+			m_defaultSteeringForce = Math::makeVector(0.0f, 0.0f);
+			m_thirstySteeringForce = Math::makeVector(0.0f, 0.0f);
+			this->m_dt = dt;
 
-			entities = this->perceive<Prey>(perceptionRadius);
+			m_entities = this->perceive<Prey>(m_perceptionRadius);
 
 			// Code before tasks
 			/*
 			// PRIO 0 -> avoid collision 
-			if (this->mayCollide(entities))
+			if (this->mayCollide(m_entities))
 			{
-				avoidColSteeringForce = this->avoidCollisions(entities);
+				avoidColSteeringForce = this->avoidCollisions(m_entities);
 			}
 
 			// PRIO 1 -> go drink
-			else if (thirstiness < 10 && !inWater)
+			else if (m_thirstiness < 10 && !m_inWater)
 			{
 				// If there is no water source selected
-				if (currentWater == nullptr)
+				if (m_currentWater == nullptr)
 				{
-					currentWater = findNearestWaterSource();
+					m_currentWater = findNearestWaterSource();
 				}
 
 				// If there is no water source in the simulation
-				if (currentWater == nullptr)
+				if (m_currentWater == nullptr)
 				{
 					goto prio2;
 				}
 
 				// Making an arrival force on the pos of the targeted water source 
-				thirstySteeringForce += this->arrival(currentWater->getPosition(), dt);
+				m_thirstySteeringForce += this->arrival(m_currentWater->getPosition(), m_dt);
 
 			}
 
@@ -277,7 +297,7 @@ namespace Crowds
 				float currentHeaviestMass = mass; 
 				int heaviestEntity = 0;
 				int entityIndex = -1;
-				for (auto& entity : entities)
+				for (auto& entity : m_entities)
 				{
 					entityIndex++;
 					float entityMass = entity->getMass();
@@ -292,45 +312,45 @@ namespace Crowds
 				// First case -> is the heaviest : just wander
 				if (isHeaviest)
 				{
-					wanderSteeringForce = Boid::wander(2.0, 3.0, previousAngle, dt * 5.0);
+					wanderSteeringForce = Boid::wander(2.0, 3.0, m_previousAngle, m_dt * 5.0);
 				}
 
 				// Second case -> follow heaviest sheep
 				else
 				{
-					followSteeringForce = Boid::separation(perceptionRadius * 0.5, dt) * 0.005;
-					followSteeringForce += this->arrival(entities.at(entityIndex)->getPosition(), dt);
-					//followSteeringForce += Boid::alignment(perceptionRadius * 0.5, dt);
+					followSteeringForce = Boid::separation(m_perceptionRadius * 0.5, m_dt) * 0.005;
+					followSteeringForce += this->arrival(m_entities.at(entityIndex)->getPosition(), m_dt);
+					//followSteeringForce += Boid::alignment(m_perceptionRadius * 0.5, m_dt);
 				}
 			}
 
-			// Computing the thirstiness
+			// Computing the m_thirstiness
 			time_t currentTime = clock();
-			float deltaTime = compute_time(lastSecond, currentTime);
+			float deltaTime = compute_time(m_lastSecond, currentTime);
 			if (deltaTime > 1)
 			{
-				thirstiness--;
-				if (inWater)
+				m_thirstiness--;
+				if (m_inWater)
 				{
-					thirstiness += 5;
-					if (thirstiness > 100)
+					m_thirstiness += 5;
+					if (m_thirstiness > 100)
 					{
-						thirstiness = 100;
+						m_thirstiness = 100;
 					}
 				}
-				lastSecond = currentTime;
+				m_lastSecond = currentTime;
 			}
 			
 
 			// Computing if is in water
 			Math::Vector2f pos = this->getPosition();
-			for (auto water : waters)
+			for (auto water : m_waters)
 			{
 				Math::Vector2f waterPos = water->getPosition();
 				float dist = (pos - waterPos).norm();
 				if (dist < water->getRadius())
 				{
-					inWater = true;
+					m_inWater = true;
 					break;
 				}
 			}
@@ -339,20 +359,20 @@ namespace Crowds
 			
 			//AI::Tasks::Task::Status status = currentTask->execute();
 			
-			preyBehavior->execute();
+			m_preyBehavior->execute();
 
 			// Forgeting the water sources
-			// std::cout << "nbr of water sources perveived : " << waters.size() << std::endl;
-			waters.clear();
+			// std::cout << "nbr of water sources perveived : " << m_waters.size() << std::endl;
+			m_waters.clear();
 
 
 
-			this->addSteeringForce(defaultSteeringForce);
-			this->addSteeringForce(thirstySteeringForce);
+			this->addSteeringForce(m_defaultSteeringForce);
+			this->addSteeringForce(m_thirstySteeringForce);
 
 			Boid::update(dt);
 
-			if (thirstiness <= 0)
+			if (m_thirstiness <= 0)
 			{
 				killed();
 			}

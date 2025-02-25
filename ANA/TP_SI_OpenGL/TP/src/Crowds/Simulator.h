@@ -72,7 +72,7 @@ namespace Crowds
 		/// <summary>
 		/// Updates all agents.
 		/// </summary>
-		/// <param name="dt">The dt.</param>
+		/// <param name="m_dt">The m_dt.</param>
 		virtual void update(double dt)
 		{
 			//std::cout << "Number of simulated agents: " << m_agents.size() << ", in tree " << m_neighbourhoodTree.size() << std::endl;
@@ -170,7 +170,7 @@ namespace Crowds
 		using message_handler::post;
 
 		/// <summary>
-		/// Posts the specified message to the entities lying in the provided circle.
+		/// Posts the specified message to the m_entities lying in the provided circle.
 		/// </summary>
 		/// <param name="message">The message.</param>
 		/// <param name="position">The position.</param>

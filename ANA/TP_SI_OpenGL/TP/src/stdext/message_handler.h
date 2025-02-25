@@ -276,7 +276,7 @@ namespace stdext
 		}
 
 		/// <summary>
-		/// A specific target that is a spy. A spy receives all messages exchanged between all entities.
+		/// A specific target that is a spy. A spy receives all messages exchanged between all m_entities.
 		/// </summary>
 		/// <returns></returns>
 		constexpr void * spyTarget() const { return nullptr; }

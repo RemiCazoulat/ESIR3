@@ -9,7 +9,7 @@ namespace Crowds
 	class Water;
 
 	/// <summary>
-	/// Message sent when a collision between entities is detected
+	/// Message sent when a collision between m_entities is detected
 	/// </summary>
 	struct CollisionMessage 
 	{
